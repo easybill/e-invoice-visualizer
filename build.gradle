@@ -50,3 +50,12 @@ wrapper {
     distributionType = Wrapper.DistributionType.BIN
     gradleVersion = '8.7'
 }
+
+tasks.register('createVersionBadge') {
+    doLast {
+        def inputFile = file('src/test/resources/version-batch.svg')
+        def outputFile = file('version-badge.svg') // Pfad zur Ausgabedatei
+
+        outputFile.text = inputFile.text.replaceAll('\\$VERS\\$', currentVersion)
+    }
+}
