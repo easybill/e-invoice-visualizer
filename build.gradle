@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'io.github.goooler.shadow' version '8.1.7'
+}
+
+group = 'io.github.easybill'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.sf.saxon:Saxon-HE:12.4'
+    implementation 'org.apache.xmlgraphics:fop:2.9'
+}
+
+jar {
+    archiveBaseName = rootProject.name as String
+    archiveVersion.set('')
+
+    manifest {
+        attributes 'Implementation-Title': rootProject.name,
+                'Implementation-Version': currentVersion,
+                'Version': currentVersion,
+                'Main-Class': mainClassName
+    }
+}
+
+shadowJar {
+    archiveBaseName = rootProject.name as String
+    archiveVersion.set('')
+    archiveClassifier.set(null)
+    mergeServiceFiles()
+}
+
+tasks.register('buildDockerImage', Exec) {
+    dependsOn shadowJar
+    group = 'Docker'
+    description = 'Builds the Docker image for the application.'
+
+    commandLine '/usr/bin/env', 'docker', 'build', '-t', 'xrviz-service', '.'
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.BIN
+    gradleVersion = '8.7'
+}

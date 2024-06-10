@@ -1,0 +1,15 @@
+### GET request for status
+GET http://localhost:4000/status.json
+
+
+### Generate a HTML file from a XML file
+POST http://localhost:4000/convert.html
+Content-Type: application/xml
+
+< ./EN16931_Einfach.xml
+
+### Generate a PDF file from a XML file
+POST http://localhost:4000/convert.pdf
+Content-Type: application/xml
+
+< ./EN16931_Einfach.xml
