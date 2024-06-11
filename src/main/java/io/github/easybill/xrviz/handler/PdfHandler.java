@@ -11,6 +11,7 @@ import java.io.IOException;
 public class PdfHandler extends XmlRequestExtractor implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        logger.info("PDF conversion requested");
         try {
             var xml = validate(exchange);
             if (xml.isEmpty()) {

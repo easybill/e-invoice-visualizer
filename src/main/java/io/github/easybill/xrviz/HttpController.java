@@ -23,7 +23,7 @@ public class HttpController {
 
             httpServer.createContext("/convert.html", new HtmlHandler());
             httpServer.createContext("/convert.pdf", new PdfHandler());
-            httpServer.createContext("/status.json", new StatusHandler());
+            httpServer.createContext("/health", new StatusHandler());
 
             httpServer.start();
             logger.config("Web server started on port " + HttpController.HTTP_PORT);

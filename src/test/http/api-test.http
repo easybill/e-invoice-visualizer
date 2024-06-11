@@ -1,5 +1,5 @@
 ### GET request for status
-GET http://localhost:4000/status.json
+GET http://localhost:4000/health
 
 
 ### Generate a HTML file from a XML file

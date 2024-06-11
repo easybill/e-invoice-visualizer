@@ -10,7 +10,6 @@ import java.util.Properties;
 import java.util.jar.Manifest;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 public class Config {
