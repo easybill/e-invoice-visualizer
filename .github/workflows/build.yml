@@ -25,4 +25,4 @@ jobs:
           gradle-version: 8.7
 
       - name: Test Gradle Build
-        run: ./gradle build --dry-run
+        run: gradle build --dry-run
