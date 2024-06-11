@@ -22,11 +22,12 @@ dependencies {
 jar {
     archiveBaseName = rootProject.name as String
     archiveVersion.set('')
+    def shortCommitHash = 'git rev-parse --short=8 HEAD'.execute().text.trim()
 
     manifest {
         attributes 'Implementation-Title': rootProject.name,
-                'Implementation-Version': currentVersion,
-                'Version': currentVersion,
+                'Implementation-Version': "${currentVersion} (${shortCommitHash})",
+                'Version': "${currentVersion} (${shortCommitHash})",
                 'Main-Class': mainClassName
     }
 }
@@ -39,8 +40,8 @@ shadowJar {
 }
 
 tasks.register('buildDockerImage', Exec) {
-    dependsOn shadowJar
     group = 'Docker'
+    dependsOn shadowJar
     description = 'Builds the Docker image for the application.'
 
     commandLine '/usr/bin/env', 'docker', 'build', '-t', 'xrviz-service', '.'
@@ -52,9 +53,10 @@ wrapper {
 }
 
 tasks.register('createVersionBadge') {
+    group = 'GitHub'
     doLast {
         def inputFile = file('src/test/resources/version-batch.svg')
-        def outputFile = file('version-badge.svg') // Pfad zur Ausgabedatei
+        def outputFile = file('version-badge.svg')
 
         outputFile.text = inputFile.text.replaceAll('\\$VERS\\$', currentVersion)
     }

@@ -7,6 +7,8 @@ import io.github.easybill.xrviz.Config;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import static io.github.easybill.xrviz.handler.XmlRequestExtractor.logger;
+
 public class StatusHandler implements HttpHandler {
 
     public static final String JSON_RESPONSE = """
@@ -15,6 +17,7 @@ public class StatusHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         if ("GET".equals(exchange.getRequestMethod())) {
+            logger.info("Health check requested");
             String version = Config.getVersion();
             Config.UptimePair uptime = Config.calcUptime();
 
@@ -31,6 +34,7 @@ public class StatusHandler implements HttpHandler {
             exchange.getResponseBody().write(response);
             exchange.getResponseBody().close();
         } else {
+            logger.warning("Wrong method request for health check: " + exchange.getRequestMethod());
             exchange.sendResponseHeaders(405, -1); // 405 Method Not Allowed
         }
 

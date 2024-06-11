@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class HtmlHandler extends XmlRequestExtractor implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        logger.info("HTML conversion requested");
         try {
             var xml = validate(exchange);
             if (xml.isEmpty()) {
