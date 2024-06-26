@@ -24,7 +24,7 @@ jobs:
           cache: 'gradle'
 
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
+        uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: 8.7
 
@@ -32,7 +32,7 @@ jobs:
         run: docker buildx create --name custom_builder --use
 
       - name: Build application
-        run: ./gradlew shadowJar
+        run: gradle shadowJar
 
       - name: Build images
         run: docker buildx build --platform=linux/amd64 --platform=linux/arm64 -t easybill/e-invoice-visualizer:${{github.ref_name}} -t easybill/e-invoice-visualizer:latest  . --push
