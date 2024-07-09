@@ -1,18 +1,18 @@
 @baseUrl = http://localhost:4000
-@xmlFile = ./EN16931_Einfach.xml
-@headers = Content-Type: application/xml\nAccept-Language: de
 
 ### GET request for status
 GET {{baseUrl}}/health
 
 ### Generate a HTML file from a XML file
 POST {{baseUrl}}/convert.html
-{{headers}}
+Content-Type: application/xml
+Accept-Language: de
 
-< {{xmlFile}}
+< ./EN16931_Einfach.xml
 
 ### Generate a PDF file from a XML file
 POST {{baseUrl}}/convert.pdf
-{{headers}}
+Content-Type: application/xml
+Accept-Language: de
 
-< {{xmlFile}}
+< ./EN16931_Einfach.xml
