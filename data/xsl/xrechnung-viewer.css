@@ -644,11 +644,12 @@ button
   {
     display: block;
     float: left;
-    width: calc(100vw - 170px);
+    width: 100%;
     padding: 11px 10px !important;
     line-height: 1.3;
     min-height: 38px;
     height: auto;
+    max-width: calc(100vw - 100px);
     overflow-x: auto;
   }
 
