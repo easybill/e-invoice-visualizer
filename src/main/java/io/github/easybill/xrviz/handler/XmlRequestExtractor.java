@@ -9,9 +9,10 @@ import java.util.Optional;
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
+import static io.github.easybill.xrviz.XslTransformer.*;
+
 public abstract class XmlRequestExtractor {
     static final Logger logger = Logger.getGlobal();
-    private static final String CII_VALIDATION_STRING = "<rsm:CrossIndustryInvoice";
 
     Optional<String> validate(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -23,7 +24,7 @@ public abstract class XmlRequestExtractor {
 
         String xml = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
 
-        if (xml.isBlank() || !xml.contains(CII_VALIDATION_STRING)) {
+        if (!isXMLValid(xml)) {
             logger.severe("Invalid XML content!");
 
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
@@ -38,4 +39,9 @@ public abstract class XmlRequestExtractor {
         return acceptLanguage != null && acceptLanguage.toLowerCase().contains("en") ? "en" : "de";
     }
 
+    private boolean isXMLValid(String xml) {
+        return !xml.isBlank() && (xml.contains(CII_VALIDATION_STRING) ||
+                                  xml.contains(UBL_I_VALIDATION_STRING) ||
+                                  xml.contains(UBL_C_VALIDATION_STRING));
+    }
 }

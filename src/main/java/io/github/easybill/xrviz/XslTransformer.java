@@ -20,16 +20,53 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class XslTransformer {
     static final Logger logger = Logger.getGlobal();
     static final String BASE_PATH = Config.getValue(Config.Keys.DATA_PATH);
+    public static final String CII_VALIDATION_STRING = "<rsm:CrossIndustryInvoice";
+    public static final String UBL_I_VALIDATION_STRING = "<Invoice";
+    public static final String UBL_C_VALIDATION_STRING = "<CreditNote";
+
+    enum DocumentType {
+        CII("cii-xr.xsl"),
+        UBL_I("ubl-invoice-xr.xsl"),
+        UBL_C("ubl-creditnote-xr.xsl");
+
+        private final String xslName;
+
+        DocumentType(String xslName) {
+            this.xslName = xslName;
+        }
+
+        public String getXslName() {
+            return xslName;
+        }
+
+        public static Optional<DocumentType> detectDocumentType(String xmlContent) {
+            if (xmlContent == null || xmlContent.isEmpty()) {
+                return Optional.empty();
+            }
+
+            if (xmlContent.contains(CII_VALIDATION_STRING)) {
+                return Optional.of(CII);
+            } else if (xmlContent.contains(UBL_I_VALIDATION_STRING)) {
+                return Optional.of(UBL_I);
+            } else if (xmlContent.contains(UBL_C_VALIDATION_STRING)) {
+                return Optional.of(UBL_C);
+            }
+
+            return Optional.empty();
+        }
+    }
 
     public static void validateFiles() {
         String[] files = {
             "xsl/cii-xr.xsl",
+            "xsl/ubl-invoice-xr.xsl",
             "xsl/xrechnung-html.xsl",
             "xsl/xr-pdf.xsl",
             "fop/fop.xconf"
@@ -47,24 +84,27 @@ public class XslTransformer {
         }
     }
 
-    private static DOMSource transformCiiToXr(String inputXml) throws TransformerException {
+    private static DOMSource transformXmlToXr(String inputXml, DocumentType type) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
-        StreamSource xslCiiXr = new StreamSource("data/xsl/cii-xr.xsl");
-        Transformer ciiXrTransformer = factory.newTransformer(xslCiiXr);
+        StreamSource source = new StreamSource("data/xsl/" + type.getXslName());
+        Transformer transformer = factory.newTransformer(source);
         Source xml = new StreamSource(new StringReader(inputXml));
         DOMResult domResult = new DOMResult();
-        ciiXrTransformer.transform(xml, domResult);
+        transformer.transform(xml, domResult);
         return new DOMSource(domResult.getNode());
     }
 
     public static String transformToHtml(String inputXml, String language) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         StreamSource xslXrHtml = new StreamSource("data/xsl/xrechnung-html.xsl");
+
         Transformer xslXrTransformer = factory.newTransformer(xslXrHtml);
         xslXrTransformer.setParameter("lang", language);
-        DOMSource transformedSource = transformCiiToXr(inputXml);
+
+        DOMSource transformedSource = transformXmlToXr(inputXml, DocumentType.detectDocumentType(inputXml).orElseThrow());
         StringWriter outputString = new StringWriter();
         xslXrTransformer.transform(transformedSource, new StreamResult(outputString));
+
         return outputString.toString();
     }
 
@@ -74,7 +114,7 @@ public class XslTransformer {
         Transformer xslXrTransformer = factory.newTransformer(xslXrPdf);
         xslXrTransformer.setParameter("lang", language);
 
-        DOMSource transformedSource = transformCiiToXr(inputXml);
+        DOMSource transformedSource = transformXmlToXr(inputXml, DocumentType.detectDocumentType(inputXml).orElseThrow());
         StringWriter outputString = new StringWriter();
         xslXrTransformer.transform(transformedSource, new StreamResult(outputString));
         String foXmlString = outputString.toString();
