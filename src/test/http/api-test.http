@@ -17,6 +17,13 @@ Accept-Language: de
 
 < ./ubl-invoice.xml
 
+### Generate a HTML file from a prefixed UBL Invoice file
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./ubl-invoice-prefix.xml
+
 ### Generate a HTML file from a UBL CreditNote file
 POST {{baseUrl}}/convert.html
 Content-Type: application/xml

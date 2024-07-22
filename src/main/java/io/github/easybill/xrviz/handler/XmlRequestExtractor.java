@@ -8,11 +8,13 @@ import java.util.Optional;
 
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import static io.github.easybill.xrviz.XslTransformer.*;
 
 public abstract class XmlRequestExtractor {
     static final Logger logger = Logger.getGlobal();
+    static final Pattern REGEX = Pattern.compile("[<:](CrossedustryInvoice|Invoice|CreditNote)");
 
     Optional<String> validate(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {
@@ -40,8 +42,6 @@ public abstract class XmlRequestExtractor {
     }
 
     private boolean isXMLValid(String xml) {
-        return !xml.isBlank() && (xml.contains(CII_VALIDATION_STRING) ||
-                                  xml.contains(UBL_I_VALIDATION_STRING) ||
-                                  xml.contains(UBL_C_VALIDATION_STRING));
+        return !xml.isBlank() && (REGEX.matcher(xml).find());
     }
 }

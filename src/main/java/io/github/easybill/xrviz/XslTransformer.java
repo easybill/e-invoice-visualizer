@@ -1,5 +1,6 @@
 package io.github.easybill.xrviz;
 
+import net.sf.saxon.regex.RegularExpression;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
@@ -23,13 +24,16 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XslTransformer {
     static final Logger logger = Logger.getGlobal();
     static final String BASE_PATH = Config.getValue(Config.Keys.DATA_PATH);
-    public static final String CII_VALIDATION_STRING = "<rsm:CrossIndustryInvoice";
-    public static final String UBL_I_VALIDATION_STRING = "<Invoice";
-    public static final String UBL_C_VALIDATION_STRING = "<CreditNote";
+    public static final String CII_VALIDATION_STRING = "CrossIndustryInvoice";
+    public static final String UBL_I_VALIDATION_STRING = "Invoice";
+    public static final String UBL_C_VALIDATION_STRING = "CreditNote";
+    public static final Pattern REGEX = Pattern.compile("[<:](CrossedustryInvoice|Invoice|CreditNote)");
 
     enum DocumentType {
         CII("cii-xr.xsl"),
@@ -51,15 +55,18 @@ public class XslTransformer {
                 return Optional.empty();
             }
 
-            if (xmlContent.contains(CII_VALIDATION_STRING)) {
-                return Optional.of(CII);
-            } else if (xmlContent.contains(UBL_I_VALIDATION_STRING)) {
-                return Optional.of(UBL_I);
-            } else if (xmlContent.contains(UBL_C_VALIDATION_STRING)) {
-                return Optional.of(UBL_C);
+            final Matcher matcher = REGEX.matcher(xmlContent);
+            if (!matcher.find()) {
+                return Optional.empty();
             }
 
-            return Optional.empty();
+            return switch (matcher.group(1)) {
+                case CII_VALIDATION_STRING -> Optional.of(CII);
+                case UBL_I_VALIDATION_STRING -> Optional.of(UBL_I);
+                case UBL_C_VALIDATION_STRING -> Optional.of(UBL_C);
+                default -> Optional.empty();
+            };
+
         }
     }
 
