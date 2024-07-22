@@ -10,9 +10,37 @@ Accept-Language: de
 
 < ./EN16931_Einfach.xml
 
+### Generate a HTML file from a UBL Invoice file
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./ubl-invoice.xml
+
+### Generate a HTML file from a UBL CreditNote file
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./ubl-creditnote.xml
+
 ### Generate a PDF file from a XML file
 POST {{baseUrl}}/convert.pdf
 Content-Type: application/xml
 Accept-Language: de
 
 < ./EN16931_Einfach.xml
+
+### Generate a PDF file from a UBL Invoice file
+POST {{baseUrl}}/convert.pdf
+Content-Type: application/xml
+Accept-Language: de
+
+< ./ubl-invoice.xml
+
+### Generate a PDF file from a UBL CreditNote file
+POST {{baseUrl}}/convert.pdf
+Content-Type: application/xml
+Accept-Language: de
+
+< ./ubl-creditnote.xml
