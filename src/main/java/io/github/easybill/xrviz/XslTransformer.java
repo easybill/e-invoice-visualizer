@@ -1,5 +1,6 @@
 package io.github.easybill.xrviz;
 
+import net.sf.saxon.regex.RegularExpression;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
