@@ -3,18 +3,15 @@ package io.github.easybill.xrviz.handler;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
-
-import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import static io.github.easybill.xrviz.XslTransformer.*;
-
 public abstract class XmlRequestExtractor {
     static final Logger logger = Logger.getGlobal();
-    static final Pattern REGEX = Pattern.compile("[<:](CrossedustryInvoice|Invoice|CreditNote)");
+    static final Pattern REGEX = Pattern.compile("[<:](CrossIndustryInvoice|Invoice|CreditNote)");
 
     Optional<String> validate(HttpExchange exchange) throws IOException {
         if (!exchange.getRequestMethod().equalsIgnoreCase("POST")) {

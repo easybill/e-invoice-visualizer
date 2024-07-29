@@ -33,7 +33,7 @@ public class XslTransformer {
     public static final String CII_VALIDATION_STRING = "CrossIndustryInvoice";
     public static final String UBL_I_VALIDATION_STRING = "Invoice";
     public static final String UBL_C_VALIDATION_STRING = "CreditNote";
-    public static final Pattern REGEX = Pattern.compile("[<:](CrossedustryInvoice|Invoice|CreditNote)");
+    public static final Pattern REGEX = Pattern.compile("[<:](CrossIndustryInvoice|Invoice|CreditNote)");
 
     enum DocumentType {
         CII("cii-xr.xsl"),

@@ -3,12 +3,19 @@
 ### GET request for status
 GET {{baseUrl}}/health
 
-### Generate a HTML file from a XML file
+### Generate a HTML file from a CrossIndustryInvoice file
 POST {{baseUrl}}/convert.html
 Content-Type: application/xml
 Accept-Language: de
 
 < ./EN16931_Einfach.xml
+
+### Generate a HTML file from another CrossIndustryInvoice file
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./cii-xrechnung.xml
 
 ### Generate a HTML file from a UBL Invoice file
 POST {{baseUrl}}/convert.html
