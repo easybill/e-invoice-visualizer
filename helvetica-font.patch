@@ -1,0 +1,21 @@
+Subject: [PATCH] Use Helvetica as font
+---
+Index: data/xsl/xr-pdf/lib/konstanten.xsl
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/xsl/xr-pdf/lib/konstanten.xsl b/data/xsl/xr-pdf/lib/konstanten.xsl
+--- a/data/xsl/xr-pdf/lib/konstanten.xsl	(revision ce7283ab21026b769fe53fc5d2022364c8412579)
++++ b/data/xsl/xr-pdf/lib/konstanten.xsl	(date 1722865849651)
+@@ -12,8 +12,8 @@
+   == Schriften
+   =========================================================================== -->
+ 
+-  <xsl:variable name="fontSans">SourceSerifPro</xsl:variable>
+-  <xsl:variable name="fontSerif">SourceSerifPro</xsl:variable>
++  <xsl:variable name="fontSans">Helvetica</xsl:variable>
++  <xsl:variable name="fontSerif">Helvetica</xsl:variable>
+ 
+   <xsl:variable name="amount-picture" select="xrf:_('amount-format')"/>
+   <xsl:variable name="percentage-picture" select="xrf:_('percentage-format')"/>
