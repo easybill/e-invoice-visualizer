@@ -58,3 +58,18 @@ Content-Type: application/xml
 Accept-Language: de
 
 < ./ubl-creditnote.xml
+
+
+### Generate a PDF file from a XML with UTF-8 BOM
+POST {{baseUrl}}/convert.pdf
+Content-Type: application/xml
+Accept-Language: de
+
+< ./output_with_bom.xml
+
+### Generate a HTML file from a XML with UTF-8 BOM
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./output_with_bom.xml
