@@ -85,8 +85,10 @@ public class Config {
     }
 
     public static void showBanner() {
-        try {
-            logger.info("\n" + (new String(Config.class.getResourceAsStream("/banner.txt").readAllBytes())));
+        try (InputStream inputStream = Config.class.getResourceAsStream("/banner.txt")) {
+            if (inputStream != null) {
+                logger.info("\n" + new String(inputStream.readAllBytes()));
+            }
         } catch (IOException ignored) {
         }
         logger.info("XRechnung Visualizer v" + getVersion());
