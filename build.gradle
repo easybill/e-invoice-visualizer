@@ -15,8 +15,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.sf.saxon:Saxon-HE:12.4'
+    implementation 'net.sf.saxon:Saxon-HE:12.5'
     implementation 'org.apache.xmlgraphics:fop:2.9'
+    implementation 'com.googlecode.juniversalchardet:juniversalchardet:1.0.3'
 }
 
 jar {
@@ -49,7 +50,7 @@ tasks.register('buildDockerImage', Exec) {
 
 wrapper {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = '8.7'
+    gradleVersion = '8.10.1'
 }
 
 tasks.register('createVersionBadge') {
@@ -59,5 +60,24 @@ tasks.register('createVersionBadge') {
         def outputFile = file('version-badge.svg')
 
         outputFile.text = inputFile.text.replaceAll('\\$VERS\\$', currentVersion)
+    }
+}
+
+tasks.register('getLatestGradleVersion') {
+    doLast {
+        def responseText = project.resources.text.fromUri('https://api.github.com/repos/gradle/gradle/releases').asString()
+        def latestStableVersion = (responseText =~ /"tag_name"\s*:\s*"v(\d+\.\d+(?:\.\d+)?)"[^}]+"draft"\s*:\s*(false)[^}]+"prerelease"\s*:\s*(false)/)
+                .findAll().first()[1]
+
+        if (latestStableVersion) {
+            if (latestStableVersion == gradle.gradleVersion) {
+                println "You are up to date ($latestStableVersion)."
+            } else {
+                println "Latest stable Gradle version is: $latestStableVersion (in use: ${gradle.gradleVersion})" +
+                        "\n\nGet it with: ./gradlew wrapper --gradle-version=$latestStableVersion"
+            }
+        } else {
+            println "Could not determine the latest stable Gradle version."
+        }
     }
 }
