@@ -38,7 +38,7 @@ public abstract class XmlRequestExtractor {
         String xml = new String(requestBody, charset);
 
         // Remove BOM if present
-        if (xml.startsWith("\uFEFF")) {
+        if (xml.startsWith("\uFEFF") || xml.startsWith("\uFFFE")) {
             xml = xml.substring(1);
         }
 
