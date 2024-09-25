@@ -73,3 +73,24 @@ Content-Type: application/xml
 Accept-Language: de
 
 < ./output_with_bom.xml
+
+### Generate a PDF file from a XML with UTF-16 BE
+POST {{baseUrl}}/convert.pdf
+Content-Type: application/xml
+Accept-Language: de
+
+< ./base-example-utf16be.xml
+
+### Generate a PDF file from a XML with UTF-16 LE
+POST {{baseUrl}}/convert.pdf
+Content-Type: application/xml
+Accept-Language: de
+
+< ./base-example-utf16le.xml
+
+### Generate a HTML file from a XML with broken encoding
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./broken-encoding.xml

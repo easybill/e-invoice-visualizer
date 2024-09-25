@@ -1,9 +1,11 @@
 package io.github.easybill.xrviz.handler;
 
 import com.sun.net.httpserver.HttpExchange;
+import org.mozilla.universalchardet.UniversalDetector;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -21,7 +23,30 @@ public abstract class XmlRequestExtractor {
             return Optional.empty();
         }
 
-        String xml = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+        byte[] requestBody = exchange.getRequestBody().readAllBytes();
+
+        // detect encoding
+        UniversalDetector detector = new UniversalDetector(null);
+        detector.handleData(requestBody, 0, requestBody.length);
+        detector.dataEnd();
+        String encoding = detector.getDetectedCharset();
+        detector.reset();
+
+        Charset charset = null;
+        try {
+            charset = (encoding != null) ? Charset.forName(encoding) : StandardCharsets.UTF_8;
+        } catch (IllegalArgumentException e) {
+            logger.severe("Invalid charset: " + encoding);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
+            return Optional.empty();
+        }
+
+        String xml = new String(requestBody, charset);
+
+        // Remove BOM if present
+        if (xml.startsWith("\uFEFF") || xml.startsWith("\uFFFE")) {
+            xml = xml.substring(1);
+        }
 
         if (!isXMLValid(xml)) {
             logger.severe("Invalid XML content!");

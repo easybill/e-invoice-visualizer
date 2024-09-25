@@ -2,7 +2,6 @@ package io.github.easybill.xrviz.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.github.easybill.xrviz.XmlHelper;
 import io.github.easybill.xrviz.XslTransformer;
 
 import javax.xml.transform.TransformerException;
@@ -20,9 +19,7 @@ public class HtmlHandler extends XmlRequestExtractor implements HttpHandler {
                 return;
             }
 
-            var xmlContent = XmlHelper.removeBOM(xml.get());
-
-            byte[] response = XslTransformer.transformToHtml(xmlContent, getLanguage(exchange)).getBytes(StandardCharsets.UTF_8);
+            byte[] response = XslTransformer.transformToHtml(xml.get(), getLanguage(exchange)).getBytes(StandardCharsets.UTF_8);
 
             exchange.getResponseHeaders().set("Content-Type", "text/html");
             exchange.sendResponseHeaders(200, response.length);
