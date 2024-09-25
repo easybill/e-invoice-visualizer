@@ -87,3 +87,10 @@ Content-Type: application/xml
 Accept-Language: de
 
 < ./base-example-utf16le.xml
+
+### Generate a HTML file from a XML with broken encoding
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./broken-encoding.xml

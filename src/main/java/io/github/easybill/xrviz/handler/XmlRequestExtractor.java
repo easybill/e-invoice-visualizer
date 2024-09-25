@@ -32,8 +32,14 @@ public abstract class XmlRequestExtractor {
         String encoding = detector.getDetectedCharset();
         detector.reset();
 
-        // Fallback to UTF-8 if no encoding was detected
-        Charset charset = (encoding != null) ? Charset.forName(encoding) : StandardCharsets.UTF_8;
+        Charset charset = null;
+        try {
+            charset = (encoding != null) ? Charset.forName(encoding) : StandardCharsets.UTF_8;
+        } catch (IllegalArgumentException e) {
+            logger.severe("Invalid charset: " + encoding);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
+            return Optional.empty();
+        }
 
         String xml = new String(requestBody, charset);
 
