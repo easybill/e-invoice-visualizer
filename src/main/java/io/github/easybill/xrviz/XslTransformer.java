@@ -1,11 +1,8 @@
 package io.github.easybill.xrviz;
 
-import org.apache.fop.apps.FOPException;
-import org.apache.fop.apps.Fop;
-import org.apache.fop.apps.FopFactory;
-import org.apache.fop.apps.MimeConstants;
-import org.apache.fop.fonts.FontManager;
+import org.apache.fop.apps.*;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -114,7 +111,7 @@ public class XslTransformer {
         return outputString.toString();
     }
 
-    public static byte[] transformToPdf(String inputXml, String language) throws TransformerException, FOPException, IOException {
+    public static byte[] transformToPdf(String inputXml, String language) throws TransformerException, SAXException, IOException {
         TransformerFactory factory = TransformerFactory.newInstance();
         StreamSource xslXrPdf = new StreamSource("data/xsl/xr-pdf.xsl");
         Transformer xslXrTransformer = factory.newTransformer(xslXrPdf);
@@ -129,9 +126,9 @@ public class XslTransformer {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-        FopFactory fopFactory = FopFactory.newInstance(new File("data/fop/fop.xconf").toURI());
-        FontManager fontManager = fopFactory.getFontManager();
-        logger.info(fontManager.getResourceResolver().getBaseURI().toString());
+        FopConfParser parser = new FopConfParser(new File("data/fop/fop.xconf"));
+        FopFactoryBuilder builder = parser.getFopFactoryBuilder();
+        FopFactory fopFactory = builder.build();
         Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, out);
 
         InputSource src = new InputSource(new java.io.StringReader(foXmlString));
