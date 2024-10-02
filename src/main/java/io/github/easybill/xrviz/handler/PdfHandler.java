@@ -3,7 +3,7 @@ package io.github.easybill.xrviz.handler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import io.github.easybill.xrviz.XslTransformer;
-import org.apache.fop.apps.FOPException;
+import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class PdfHandler extends XmlRequestExtractor implements HttpHandler {
             exchange.getResponseBody().write(response);
             exchange.getResponseBody().close();
 
-        } catch (TransformerException | FOPException e) {
+        } catch (TransformerException | SAXException e) {
             exchange.sendResponseHeaders(500, -1);
 
             logger.severe("Error while transforming XML to PDF: " + e.getMessage());

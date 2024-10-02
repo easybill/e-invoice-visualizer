@@ -1,22 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fop version="1.0">
-  <accessibility>true</accessibility>
-  <renderers>
-    <renderer mime="application/pdf">
-      <fonts>
-        <font kerning="yes" embed-url="fonts/SourceSerifPro-Light.ttf" embedding-mode="subset">
-          <font-triplet name="SourceSerifPro" style="normal" weight="normal"/>
-        </font>
-        <font kerning="yes" embed-url="fonts/SourceSerifPro-SemiBold.ttf" embedding-mode="subset">
-          <font-triplet name="SourceSerifPro" style="normal" weight="700"/>
-        </font>
-        <font kerning="yes" embed-url="fonts/SourceSerifPro-LightItalic.ttf" embedding-mode="subset">
-          <font-triplet name="SourceSerifPro" style="italic" weight="normal"/>
-        </font>
-        <font kerning="yes" embed-url="fonts/SourceSerifPro-SemiBoldItalic.ttf" embedding-mode="subset">
-          <font-triplet name="SourceSerifPro" style="italic" weight="bold"/>
-        </font>
-      </fonts>
-    </renderer>
-  </renderers>
+    <accessibility>true</accessibility>
+    <renderers>
+        <renderer mime="application/pdf">
+            <fonts>
+                <font embed-url="./fonts/NotoSans-Bold.ttf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="./fonts/NotoSans-BoldItalic.ttf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="italic" weight="bold"/>
+                </font>
+                <font embed-url="./fonts/NotoSans-Italic.ttf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="./fonts/NotoSans-Regular.ttf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="./fonts/NotoSansJP-Regular.otf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="./fonts/NotoSansJP-Bold.otf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="./fonts/NotoSansSC-Regular.otf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="./fonts/NotoSansSC-Bold.otf" kerning="yes">
+                    <font-triplet name="SourceSerifPro" style="normal" weight="bold"/>
+                </font>
+            </fonts>
+        </renderer>
+    </renderers>
 </fop>
