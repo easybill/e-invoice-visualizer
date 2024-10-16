@@ -6,6 +6,7 @@ import io.github.easybill.xrviz.XslTransformer;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 
 public class HtmlHandler extends XmlRequestExtractor implements HttpHandler {
@@ -27,7 +28,7 @@ public class HtmlHandler extends XmlRequestExtractor implements HttpHandler {
             exchange.getResponseBody().close();
 
         } catch (TransformerException e) {
-            exchange.sendResponseHeaders(500, -1);
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
 
             logger.severe("Error while transforming XML to HTML: " + e.getMessage());
         }
