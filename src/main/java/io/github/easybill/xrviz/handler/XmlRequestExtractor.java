@@ -32,7 +32,7 @@ public abstract class XmlRequestExtractor {
         String encoding = detector.getDetectedCharset();
         detector.reset();
 
-        Charset charset = null;
+        Charset charset;
         try {
             charset = (encoding != null) ? Charset.forName(encoding) : StandardCharsets.UTF_8;
         } catch (IllegalArgumentException e) {
@@ -60,7 +60,18 @@ public abstract class XmlRequestExtractor {
 
     String getLanguage(HttpExchange exchange) {
         String acceptLanguage = exchange.getRequestHeaders().getFirst("Accept-Language");
-        return acceptLanguage != null && acceptLanguage.toLowerCase().contains("en") ? "en" : "de";
+        return acceptLanguage != null && acceptLanguage.toLowerCase().startsWith("en") ? "en" : "de";
+    }
+
+    void sendResponse(HttpExchange exchange, byte[] response, int responseCode, String contentType) {
+        try {
+            exchange.getResponseHeaders().set("Content-Type", contentType);
+            exchange.sendResponseHeaders(responseCode, response.length);
+            exchange.getResponseBody().write(response);
+            exchange.getResponseBody().close();
+        } catch (IOException e) {
+            logger.severe("Error while sending response: " + e.getMessage());
+        }
     }
 
     private boolean isXMLValid(String xml) {

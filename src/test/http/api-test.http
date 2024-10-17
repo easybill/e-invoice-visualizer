@@ -94,3 +94,16 @@ Content-Type: application/xml
 Accept-Language: de
 
 < ./broken-encoding.xml
+
+### Generate a HTML file from a XML with XEE
+POST {{baseUrl}}/convert.html
+Content-Type: application/xml
+Accept-Language: de
+
+< ./base-example-utf8-xee.xml
+> {%
+    client.test("Request executed with 400", function () {
+        client.assert(response.status === 400, "Response status is not 400");
+        client.assert(response.body.toString().includes('SXXP0003'), "Response body does not contain SXXP0003");
+    });
+%}

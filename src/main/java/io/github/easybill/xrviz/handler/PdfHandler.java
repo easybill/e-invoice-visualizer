@@ -7,6 +7,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 
 public class PdfHandler extends XmlRequestExtractor implements HttpHandler {
     @Override
@@ -19,17 +20,13 @@ public class PdfHandler extends XmlRequestExtractor implements HttpHandler {
                 return;
             }
 
-            byte[] response = XslTransformer.transformToPdf(xml.get(), getLanguage(exchange));
-
-            exchange.getResponseHeaders().set("Content-Type", "application/pdf");
-            exchange.sendResponseHeaders(200, response.length);
-            exchange.getResponseBody().write(response);
-            exchange.getResponseBody().close();
+            sendResponse(exchange,
+                XslTransformer.transformToPdf(xml.get(), getLanguage(exchange)),
+                HttpURLConnection.HTTP_OK, "application/pdf");
 
         } catch (TransformerException | SAXException e) {
-            exchange.sendResponseHeaders(500, -1);
-
             logger.severe("Error while transforming XML to PDF: " + e.getMessage());
+            sendResponse(exchange, e.getMessage().getBytes(), HttpURLConnection.HTTP_BAD_REQUEST, "text/plain");
         }
     }
 }
