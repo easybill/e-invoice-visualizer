@@ -5,11 +5,10 @@ import com.sun.net.httpserver.HttpHandler;
 import io.github.easybill.xrviz.Config;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 
-import static io.github.easybill.xrviz.handler.XmlRequestExtractor.logger;
-
-public class StatusHandler implements HttpHandler {
+public class StatusHandler extends XmlRequestExtractor implements HttpHandler {
 
     public static final String JSON_RESPONSE = """
         {"version":"%s","freeMemory":%d,"totalMemory":%d,"uptime":%d,"uptimeString":"%s"}""";
@@ -29,13 +28,10 @@ public class StatusHandler implements HttpHandler {
                 uptime.upStr()
             ).getBytes(StandardCharsets.UTF_8);
 
-            exchange.getResponseHeaders().set("Content-Type", "application/json");
-            exchange.sendResponseHeaders(200, response.length);
-            exchange.getResponseBody().write(response);
-            exchange.getResponseBody().close();
+            sendResponse(exchange, response, HttpURLConnection.HTTP_OK, "application/json");
         } else {
             logger.warning("Wrong method request for health check: " + exchange.getRequestMethod());
-            exchange.sendResponseHeaders(405, -1); // 405 Method Not Allowed
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_METHOD, -1);
         }
 
     }

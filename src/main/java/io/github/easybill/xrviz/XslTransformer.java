@@ -3,8 +3,10 @@ package io.github.easybill.xrviz;
 import org.apache.fop.apps.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
-import javax.xml.transform.Source;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -30,6 +32,22 @@ public class XslTransformer {
     public static final String UBL_I_VALIDATION_STRING = "Invoice";
     public static final String UBL_C_VALIDATION_STRING = "CreditNote";
     public static final Pattern REGEX = Pattern.compile("[<:](CrossIndustryInvoice|Invoice|CreditNote)");
+    private static final XMLReader xmlReader;
+
+    static {
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            xmlReader = saxParser.getXMLReader();
+            xmlReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            xmlReader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            xmlReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error initializing XMLReader", e);
+            throw new RuntimeException(e);
+        }
+    }
+
 
     enum DocumentType {
         CII("cii-xr.xsl"),
@@ -91,9 +109,9 @@ public class XslTransformer {
         TransformerFactory factory = TransformerFactory.newInstance();
         StreamSource source = new StreamSource("data/xsl/" + type.getXslName());
         Transformer transformer = factory.newTransformer(source);
-        Source xml = new StreamSource(new StringReader(inputXml));
+        SAXSource saxSource = new SAXSource(xmlReader, new InputSource(new StringReader(inputXml)));
         DOMResult domResult = new DOMResult();
-        transformer.transform(xml, domResult);
+        transformer.transform(saxSource, domResult);
         return new DOMSource(domResult.getNode());
     }
 
