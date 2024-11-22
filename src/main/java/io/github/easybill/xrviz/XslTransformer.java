@@ -32,22 +32,19 @@ public class XslTransformer {
     public static final String UBL_I_VALIDATION_STRING = "Invoice";
     public static final String UBL_C_VALIDATION_STRING = "CreditNote";
     public static final Pattern REGEX = Pattern.compile("[<:](CrossIndustryInvoice|Invoice|CreditNote)");
-    private static final XMLReader xmlReader;
+    private static final SAXParserFactory saxParserFactory;
 
     static {
         try {
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            xmlReader = saxParser.getXMLReader();
-            xmlReader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            xmlReader.setFeature("http://xml.org/sax/features/external-general-entities", false);
-            xmlReader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            saxParserFactory = SAXParserFactory.newInstance();
+            saxParserFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            saxParserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            saxParserFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error initializing XMLReader", e);
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, "Error initializing SAXParserFactory", e);
+            throw new ExceptionInInitializerError(e);
         }
     }
-
 
     enum DocumentType {
         CII("cii-xr.xsl"),
@@ -105,10 +102,22 @@ public class XslTransformer {
         }
     }
 
+    private static XMLReader newXmlReader() {
+        try {
+            SAXParser saxParser = saxParserFactory.newSAXParser();
+            return saxParser.getXMLReader();
+        } catch (Exception e) {
+            // should not happen due to setFeature calls on saxParserFactory
+            logger.log(Level.SEVERE, "Error initializing XMLReader", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     private static DOMSource transformXmlToXr(String inputXml, DocumentType type) throws TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         StreamSource source = new StreamSource("data/xsl/" + type.getXslName());
         Transformer transformer = factory.newTransformer(source);
+        XMLReader xmlReader = newXmlReader();
         SAXSource saxSource = new SAXSource(xmlReader, new InputSource(new StringReader(inputXml)));
         DOMResult domResult = new DOMResult();
         transformer.transform(saxSource, domResult);
