@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rsm:CrossIndustryInvoice xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100">
+    <rsm:ExchangedDocumentContext>
+        <ram:GuidelineSpecifiedDocumentContextParameter>
+            <ram:ID>urn:cen.eu:en16931:2017#conformant#urn:factur-x.eu:1p0:extended</ram:ID>
+        </ram:GuidelineSpecifiedDocumentContextParameter>
+    </rsm:ExchangedDocumentContext>
+    <rsm:ExchangedDocument>
+        <ram:ID>REXXXXXXX</ram:ID>
+        <ram:Name>RECHNUNG</ram:Name>
+        <ram:TypeCode>380</ram:TypeCode>
+        <ram:IssueDateTime>
+            <udt:DateTimeString format="102">20250611</udt:DateTimeString>
+        </ram:IssueDateTime>
+        <ram:IncludedNote>
+            <ram:Content>Bestellung XXXXX
+                Lieferadresse:
+                Max Mustermann, Musterstraße 1, 12345 MUSTERSTADT
+                Kontakt:
+                Maria Musterfrau
+                0123456789
+                Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum.
+                Bezüglich einer Entgeltminderung verweisen wir auf die aktuellen Zahlungs- und Konditionsvereinbarungen.
+                Rechnungsdatum ist zugleich Leistungsdatum.</ram:Content>
+        </ram:IncludedNote>
+        <ram:IncludedNote>
+            <ram:Content>Musterfirma GmbH
+                Musterweg 1
+                12345 Musterstadt
+                USt-Nr. DE000000000
+                HR B 000000
+                Tel.: 01234-567890
+                Fax: 01234-567891
+                E-Mail: info@musterfirma.de
+                Web: www.musterfirma.de</ram:Content>
+            <ram:SubjectCode>REG</ram:SubjectCode>
+        </ram:IncludedNote>
+    </rsm:ExchangedDocument>
+    <rsm:SupplyChainTradeTransaction>
+        <ram:IncludedSupplyChainTradeLineItem>
+            <ram:AssociatedDocumentLineDocument>
+                <ram:LineID>1</ram:LineID>
+                <ram:IncludedNote>
+                    <ram:Content>Ref.: AUFTRAGSBESTÄTIGUNG Nr. ABXXXXXXX v. 26.5.25, Zeichen Max Mustermann, Lieferung vom 11.6.2025</ram:Content>
+                </ram:IncludedNote>
+            </ram:AssociatedDocumentLineDocument>
+            <ram:SpecifiedTradeProduct>
+                <ram:SellerAssignedID>0048 RF-B</ram:SellerAssignedID>
+                <ram:Name>Rangierwagen Nr. 0048 B</ram:Name>
+                <ram:Description>Some description</ram:Description>
+            </ram:SpecifiedTradeProduct>
+            <ram:SpecifiedLineTradeAgreement>
+                <ram:GrossPriceProductTradePrice>
+                    <ram:ChargeAmount>692.0000</ram:ChargeAmount>
+                    <ram:BasisQuantity unitCode="H87">1.0000</ram:BasisQuantity>
+                    <ram:AppliedTradeAllowanceCharge>
+                        <ram:ChargeIndicator>
+                            <udt:Indicator>false</udt:Indicator>
+                        </ram:ChargeIndicator>
+                        <ram:ActualAmount>173.00</ram:ActualAmount>
+                        <ram:Reason>Artikelrabatt/-zuschlag 25%</ram:Reason>
+                    </ram:AppliedTradeAllowanceCharge>
+                </ram:GrossPriceProductTradePrice>
+                <ram:NetPriceProductTradePrice>
+                    <ram:ChargeAmount>519.0000</ram:ChargeAmount>
+                    <ram:BasisQuantity unitCode="H87">1.0000</ram:BasisQuantity>
+                </ram:NetPriceProductTradePrice>
+            </ram:SpecifiedLineTradeAgreement>
+            <ram:SpecifiedLineTradeDelivery>
+                <ram:BilledQuantity unitCode="H87">1.0000</ram:BilledQuantity>
+            </ram:SpecifiedLineTradeDelivery>
+            <ram:SpecifiedLineTradeSettlement>
+                <ram:ApplicableTradeTax>
+                    <ram:TypeCode>VAT</ram:TypeCode>
+                    <ram:CategoryCode>S</ram:CategoryCode>
+                    <ram:RateApplicablePercent>19.00</ram:RateApplicablePercent>
+                </ram:ApplicableTradeTax>
+                <ram:SpecifiedTradeSettlementLineMonetarySummation>
+                    <ram:LineTotalAmount>519.00</ram:LineTotalAmount>
+                </ram:SpecifiedTradeSettlementLineMonetarySummation>
+            </ram:SpecifiedLineTradeSettlement>
+        </ram:IncludedSupplyChainTradeLineItem>
+        <ram:IncludedSupplyChainTradeLineItem>
+            <ram:AssociatedDocumentLineDocument>
+                <ram:LineID>L1</ram:LineID>
+                <ram:IncludedNote>
+                    <ram:Content>Ref.: AUFTRAGSBESTÄTIGUNG Nr. ABXXXXXXX v. 26.5.25, Zeichen Max Mustermann, Lieferung vom 11.6.2025, Logistikpositionen</ram:Content>
+                </ram:IncludedNote>
+            </ram:AssociatedDocumentLineDocument>
+            <ram:SpecifiedTradeProduct>
+                <ram:SellerAssignedID>Versand-S-XX</ram:SellerAssignedID>
+                <ram:Name>Lieferung ab Werk (WRK)</ram:Name>
+                <ram:Description>Lieferung ab Werk (WRK)
+                    Versand per Spedition</ram:Description>
+            </ram:SpecifiedTradeProduct>
+            <ram:SpecifiedLineTradeAgreement>
+                <ram:GrossPriceProductTradePrice>
+                    <ram:ChargeAmount>69.9000</ram:ChargeAmount>
+                    <ram:BasisQuantity unitCode="H87">1.0000</ram:BasisQuantity>
+                </ram:GrossPriceProductTradePrice>
+                <ram:NetPriceProductTradePrice>
+                    <ram:ChargeAmount>69.9000</ram:ChargeAmount>
+                    <ram:BasisQuantity unitCode="H87">1.0000</ram:BasisQuantity>
+                </ram:NetPriceProductTradePrice>
+            </ram:SpecifiedLineTradeAgreement>
+            <ram:SpecifiedLineTradeDelivery>
+                <ram:BilledQuantity unitCode="H87">1.0000</ram:BilledQuantity>
+            </ram:SpecifiedLineTradeDelivery>
+            <ram:SpecifiedLineTradeSettlement>
+                <ram:ApplicableTradeTax>
+                    <ram:TypeCode>VAT</ram:TypeCode>
+                    <ram:CategoryCode>S</ram:CategoryCode>
+                    <ram:RateApplicablePercent>19.00</ram:RateApplicablePercent>
+                </ram:ApplicableTradeTax>
+                <ram:SpecifiedTradeSettlementLineMonetarySummation>
+                    <ram:LineTotalAmount>69.90</ram:LineTotalAmount>
+                </ram:SpecifiedTradeSettlementLineMonetarySummation>
+            </ram:SpecifiedLineTradeSettlement>
+        </ram:IncludedSupplyChainTradeLineItem>
+        <ram:ApplicableHeaderTradeAgreement>
+            <ram:SellerTradeParty>
+                <ram:Name>Musterfirma GmbH</ram:Name>
+                <ram:DefinedTradeContact>
+                    <ram:PersonName>Max Mustermann</ram:PersonName>
+                    <ram:TelephoneUniversalCommunication>
+                        <ram:CompleteNumber>01234-567890</ram:CompleteNumber>
+                    </ram:TelephoneUniversalCommunication>
+                    <ram:EmailURIUniversalCommunication>
+                        <ram:URIID>info@musterfirma.de</ram:URIID>
+                    </ram:EmailURIUniversalCommunication>
+                </ram:DefinedTradeContact>
+                <ram:PostalTradeAddress>
+                    <ram:PostcodeCode>12345</ram:PostcodeCode>
+                    <ram:LineOne>Musterweg 1</ram:LineOne>
+                    <ram:CityName>Musterstadt</ram:CityName>
+                    <ram:CountryID>DE</ram:CountryID>
+                </ram:PostalTradeAddress>
+                <ram:SpecifiedTaxRegistration>
+                    <ram:ID schemeID="VA">DE000000000</ram:ID>
+                </ram:SpecifiedTaxRegistration>
+            </ram:SellerTradeParty>
+            <ram:BuyerTradeParty>
+                <ram:ID>000000</ram:ID>
+                <ram:Name>Kundenfirma e.K.</ram:Name>
+                <ram:PostalTradeAddress>
+                    <ram:PostcodeCode>54321</ram:PostcodeCode>
+                    <ram:LineOne>Kundenstraße 2</ram:LineOne>
+                    <ram:CityName>Kundenstadt</ram:CityName>
+                    <ram:CountryID>DE</ram:CountryID>
+                </ram:PostalTradeAddress>
+                <ram:URIUniversalCommunication>
+                    <ram:URIID schemeID="EM">kontakt@kundenfirma.de</ram:URIID>
+                </ram:URIUniversalCommunication>
+            </ram:BuyerTradeParty>
+            <ram:BuyerOrderReferencedDocument>
+                <ram:IssuerAssignedID>Max Mustermann</ram:IssuerAssignedID>
+            </ram:BuyerOrderReferencedDocument>
+        </ram:ApplicableHeaderTradeAgreement>
+        <ram:ApplicableHeaderTradeDelivery>
+            <ram:ActualDeliverySupplyChainEvent>
+                <ram:OccurrenceDateTime>
+                    <udt:DateTimeString format="102">20250611</udt:DateTimeString>
+                </ram:OccurrenceDateTime>
+            </ram:ActualDeliverySupplyChainEvent>
+            <ram:DeliveryNoteReferencedDocument>
+                <ram:IssuerAssignedID>REXXXXXXX</ram:IssuerAssignedID>
+            </ram:DeliveryNoteReferencedDocument>
+        </ram:ApplicableHeaderTradeDelivery>
+        <ram:ApplicableHeaderTradeSettlement>
+            <ram:PaymentReference>Re.Nr.: REXXXXXXX v. 11.6.25</ram:PaymentReference>
+            <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode>
+            <ram:InvoiceeTradeParty>
+                <ram:ID>000000</ram:ID>
+                <ram:Name>Kundenfirma e.K.</ram:Name>
+                <ram:DefinedTradeContact>
+                    <ram:PersonName>Buchhaltung</ram:PersonName>
+                    <ram:TelephoneUniversalCommunication>
+                        <ram:CompleteNumber>01234-987654</ram:CompleteNumber>
+                    </ram:TelephoneUniversalCommunication>
+                    <ram:EmailURIUniversalCommunication>
+                        <ram:URIID>invoice@kundenfirma.de</ram:URIID>
+                    </ram:EmailURIUniversalCommunication>
+                </ram:DefinedTradeContact>
+                <ram:PostalTradeAddress>
+                    <ram:PostcodeCode>54321</ram:PostcodeCode>
+                    <ram:LineOne>Kundenstraße 2</ram:LineOne>
+                    <ram:CityName>Kundenstadt</ram:CityName>
+                    <ram:CountryID>DE</ram:CountryID>
+                </ram:PostalTradeAddress>
+                <ram:URIUniversalCommunication>
+                    <ram:URIID schemeID="EM">kontakt@kundenfirma.de</ram:URIID>
+                </ram:URIUniversalCommunication>
+            </ram:InvoiceeTradeParty>
+            <ram:SpecifiedTradeSettlementPaymentMeans>
+                <ram:TypeCode>30</ram:TypeCode>
+                <ram:Information>Überweisung</ram:Information>
+                <ram:PayeePartyCreditorFinancialAccount>
+                    <ram:IBANID>DE00000000000000000000</ram:IBANID>
+                </ram:PayeePartyCreditorFinancialAccount>
+                <ram:PayeeSpecifiedCreditorFinancialInstitution>
+                    <ram:BICID>GENODEF1XXX</ram:BICID>
+                </ram:PayeeSpecifiedCreditorFinancialInstitution>
+            </ram:SpecifiedTradeSettlementPaymentMeans>
+            <ram:ApplicableTradeTax>
+                <ram:CalculatedAmount>111.89</ram:CalculatedAmount>
+                <ram:TypeCode>VAT</ram:TypeCode>
+                <ram:BasisAmount>588.90</ram:BasisAmount>
+                <ram:LineTotalBasisAmount>588.90</ram:LineTotalBasisAmount>
+                <ram:CategoryCode>S</ram:CategoryCode>
+                <ram:RateApplicablePercent>19.00</ram:RateApplicablePercent>
+            </ram:ApplicableTradeTax>
+            <ram:SpecifiedTradePaymentTerms>
+                <ram:Description>Zahlung per Rechnung innerhalb 30 Tage bis 11.07.25 ohne Abzug</ram:Description>
+                <ram:DueDateDateTime>
+                    <udt:DateTimeString format="102">20250711</udt:DateTimeString>
+                </ram:DueDateDateTime>
+            </ram:SpecifiedTradePaymentTerms>
+            <ram:SpecifiedTradePaymentTerms>
+                <ram:Description>Zahlung per Rechnung innerhalb 10 Tage bis 21.06.25 2,0% Skt. (14,02)  = 686,77 €</ram:Description>
+                <ram:DueDateDateTime>
+                    <udt:DateTimeString format="102">20250621</udt:DateTimeString>
+                </ram:DueDateDateTime>
+                <ram:ApplicableTradePaymentDiscountTerms>
+                    <ram:BasisDateTime>
+                        <udt:DateTimeString format="102">20250611</udt:DateTimeString>
+                    </ram:BasisDateTime>
+                    <ram:BasisPeriodMeasure unitCode="DAY">10</ram:BasisPeriodMeasure>
+                    <ram:CalculationPercent>2.00</ram:CalculationPercent>
+                </ram:ApplicableTradePaymentDiscountTerms>
+            </ram:SpecifiedTradePaymentTerms>
+            <ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+                <ram:LineTotalAmount>588.90</ram:LineTotalAmount>
+                <ram:ChargeTotalAmount>0.00</ram:ChargeTotalAmount>
+                <ram:AllowanceTotalAmount>0.00</ram:AllowanceTotalAmount>
+                <ram:TaxBasisTotalAmount>588.90</ram:TaxBasisTotalAmount>
+                <ram:TaxTotalAmount currencyID="EUR">111.89</ram:TaxTotalAmount>
+                <ram:GrandTotalAmount>700.79</ram:GrandTotalAmount>
+                <ram:DuePayableAmount>700.79</ram:DuePayableAmount>
+            </ram:SpecifiedTradeSettlementHeaderMonetarySummation>
+        </ram:ApplicableHeaderTradeSettlement>
+    </rsm:SupplyChainTradeTransaction>
+</rsm:CrossIndustryInvoice>

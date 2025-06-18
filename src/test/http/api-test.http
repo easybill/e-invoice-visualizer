@@ -113,4 +113,9 @@ POST {{baseUrl}}/convert.pdf
 Content-Type: application/xml
 Accept-Language: de
 
-< ./issue_with_dates.xml
+< ./issue_with_multiple_specifiedtradepaymentterms.xml
+> {%
+    client.test("Request executed with 200", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
