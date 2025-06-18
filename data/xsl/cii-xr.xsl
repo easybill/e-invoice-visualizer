@@ -47,13 +47,6 @@
          </xsl:if>   
          <xsl:apply-templates mode="BT-8"
                               select="./rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeSettlement/ram:ApplicableTradeTax/ram:DueDateTypeCode"/>
-         <xsl:if test="count(./rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeSettlement/ram:SpecifiedTradePaymentTerms/ram:DueDateDateTime/udt:DateTimeString[@format = '102']) > 0">
-            <xr:Payment_due_date><xsl:attribute name="xr:id" select="'BT-9'"/>
-               <xsl:attribute name="xr:src" select="'/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeSettlement/ram:SpecifiedTradePaymentTerms/ram:DueDateDateTime'"/>            
-               <xsl:apply-templates mode="BT-9"
-                  select="./rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeSettlement/ram:SpecifiedTradePaymentTerms/ram:DueDateDateTime/udt:DateTimeString[@format = '102']"/>            
-            </xr:Payment_due_date>
-         </xsl:if>
          <xsl:apply-templates mode="BT-10"
                               select="./rsm:SupplyChainTradeTransaction/ram:ApplicableHeaderTradeAgreement/ram:BuyerReference"/>
          <xsl:apply-templates mode="BT-11"
@@ -335,11 +328,11 @@
    </xsl:template>
    <xsl:template mode="BT-23"
                  match="/rsm:CrossIndustryInvoice/rsm:ExchangedDocumentContext/ram:BusinessProcessSpecifiedDocumentContextParameter/ram:ID">
-      <xr:Business_process_type_identifier>
+      <xr:Business_process_type>
          <xsl:attribute name="xr:id" select="'BT-23'"/>
          <xsl:attribute name="xr:src" select="xr:src-path(.)"/>
          <xsl:call-template name="text"/>
-      </xr:Business_process_type_identifier>
+      </xr:Business_process_type>
    </xsl:template>
    <xsl:template mode="BT-24"
                  match="/rsm:CrossIndustryInvoice/rsm:ExchangedDocumentContext/ram:GuidelineSpecifiedDocumentContextParameter/ram:ID">

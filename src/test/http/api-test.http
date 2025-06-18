@@ -107,3 +107,15 @@ Accept-Language: de
         client.assert(response.body.toString().includes('SXXP0003'), "Response body does not contain SXXP0003");
     });
 %}
+
+### Generate a PDF file from a XML with UTF-16 LE
+POST {{baseUrl}}/convert.pdf
+Content-Type: application/xml
+Accept-Language: de
+
+< ./issue_with_multiple_specifiedtradepaymentterms.xml
+> {%
+    client.test("Request executed with 200", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
